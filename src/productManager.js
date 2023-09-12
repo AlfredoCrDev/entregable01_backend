@@ -55,7 +55,7 @@ class ProductManager {
   async getProductById(id){
       try {
           const products = await this._loadProductsFromFile();
-          
+
           const product = products.find(item => item.id === id);
           
           if (product) {
