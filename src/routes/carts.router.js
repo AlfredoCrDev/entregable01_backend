@@ -64,6 +64,12 @@ router.post("/carts/:cid/product/:pid", async (req, res) => {
       return res.status(404).send({ message: "Carrito no encontrado" });
     }
 
+    const productoExistente = productos.find((p) => p.id === productId);
+
+    if (!productoExistente) {
+      return res.status(404).send({ message: "Producto no encontrado" });
+    }
+
     const productoIndex = carritoEncontrado.products.findIndex((p) => p.product === productId);
 
     if (productoIndex !== -1) {
