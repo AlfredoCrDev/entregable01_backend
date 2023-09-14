@@ -42,9 +42,32 @@ router.post("/products", async (req, res) => {
   try {
     const newProduct = req.body
     const product = await productManager.addProduct(newProduct)
-    res.send({producto: product})
+    res.status(200).send({message: "Producto agregado correctamente", product})
   } catch (error) {
-    console.log("Error", error);
+    console.log("Error al agregar el producto", error);
+  }
+})
+
+router.put("/product/:pid", async (req, res) => {
+  try {
+    const productId = parseInt(req.params.pid);
+    const updateProduct = req.body
+    const product = await productManager.updateProduct(productId, updateProduct)
+    res.status(200).send({message:"Producto actualizado con Éxitio", product})
+  } catch (error) {
+    console.error("Error al actualizar el producto", error)
+    res.status(500).send({message: "Error al actualiza el producto"})
+  }
+})
+
+router.delete("/product/:pid", async(req, res) => {
+  try {
+    const productId = parseInt(req.params.pid);
+    const product = await productManager.deleteProduct(productId)
+    res.status(200).send({ message:'Producto eliminado exitosamente', product })
+  } catch (error) {
+    console.error("No se pudo eliminar el producto", error)
+    res.status(500).send({message: "Error al eliminar el producto"})
   }
 })
 

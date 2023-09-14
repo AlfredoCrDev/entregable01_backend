@@ -21,27 +21,42 @@ class ProductManager {
 
   async addProduct(productosParaAgregar) {
     try {
+      if(productosParaAgregar.id){
+        return "No se puede agregar ID manual"
+      }
+
+      if (!productosParaAgregar.status) {
+        productosParaAgregar.status = true;
+      }
+      
+      if (
+        !productosParaAgregar.title ||
+        !productosParaAgregar.description ||
+        !productosParaAgregar.price ||
+        !productosParaAgregar.stock ||
+        !productosParaAgregar.category ||
+        !productosParaAgregar.code
+      ) {
+        return ("Faltan propiedades obligatorias. (title, description, price, stock, status, category, code) ");
+      }
+
+
       const productoExistente = await this._loadProductsFromFile();
       const productosAgregados = [];
 
-      for (const product of productosParaAgregar) {
-        const { code } = product;
+      const productoExiste = productoExistente.some((producto) => {
+        return producto.code === productosParaAgregar.code
+      })
 
-        if (
-          productoExistente.some(
-            (existingProduct) => existingProduct.code === code
-          )
-        ) {
-          console.error(
-            `El código "${code}" ya está siendo utilizado por otro producto.`
-          );
-        } else {
-          const id = productoExistente.length + 1;
-          const newProduct = { id, ...product };
-          productoExistente.push(newProduct);
-          productosAgregados.push(newProduct);
-        }
+      if(productoExiste){
+        console.error(`El código "${productosParaAgregar.code}" ya existe`)
+        return
       }
+
+      const id = productoExistente.length + 1;
+      const newProduct = { id, ...productosParaAgregar };
+      productoExistente.push(newProduct);
+      productosAgregados.push(newProduct);
 
       await fs.writeFile("productos.json", JSON.stringify(productoExistente));
 
@@ -79,6 +94,8 @@ class ProductManager {
       "thumbnail",
       "code",
       "stock",
+      "status",
+      "category"
     ];
 
     try {
