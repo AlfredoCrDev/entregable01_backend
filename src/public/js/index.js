@@ -30,23 +30,27 @@ const socket = io(); // Conectar al servidor de Socket.io
         }
     }
 
+    // Manejar el evento submit del formulario de eliminar
     const formularioEliminar = document.getElementById("formulario-eliminar");
     formularioEliminar.addEventListener("submit", (e) => {
         e.preventDefault();
 
+        // Obtener los valores ingresados por el usuario
         const productId = document.getElementById("idProduct").value
 
-        console.log("ID PRODCUTO", productId)
+        // Enviar el nuevo producto al servidor mediante Socket.io
         socket.emit("eliminarProducto", productId);
 
+        // Limpiar los campos del formulario después de agregar el producto
         formularioEliminar.reset();
 
+         // // Escuchar eventos de Socket.io y actualizar la lista de productos
         socket.on("productoEliminado", (productId) => {
         eliminarProductoDeLaTabla(productId);
         });
     })
 
-    // Manejar el evento submit del formulario
+    // Manejar el evento submit del formulario de agregar
     const formularioAgregar = document.getElementById("formulario-agregar");
     formularioAgregar.addEventListener("submit", (e) => {
         e.preventDefault();
