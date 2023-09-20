@@ -58,6 +58,15 @@ io.on("connection", (socket) => {
         io.emit("productoAgregado", nuevoProducto);
 
     });
+
+    socket.on("eliminarProducto", async (productoId) => {
+        await productManager.deleteProduct(parseInt(productoId))
+
+        // Emitiendo un evento para actualizar la lista en el cliente.
+        io.emit("productoEliminado", productoId);
+
+    });
+
     socket.on("disconnect", () => {
         console.log("Cliente desconectado de Socket.io")
     })

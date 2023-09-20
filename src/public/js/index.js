@@ -23,12 +23,28 @@ const socket = io(); // Conectar al servidor de Socket.io
     }
 
     // Función para eliminar un producto de la tabla
-    // function eliminarProductoDeLaTabla(productId) {
-    //     const filaAEliminar = document.querySelector(`table tbody tr[data-product-id="${productId}"]`);
-    //     if (filaAEliminar) {
-    //         filaAEliminar.remove();
-    //     }
-    // }
+    function eliminarProductoDeLaTabla(productId) {
+        const filaAEliminar = document.querySelector(`table tbody tr[data-product-id="${productId}"]`);
+        if (filaAEliminar) {
+            filaAEliminar.remove();
+        }
+    }
+
+    const formularioEliminar = document.getElementById("formulario-eliminar");
+    formularioEliminar.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const productId = document.getElementById("idProduct").value
+
+        console.log("ID PRODCUTO", productId)
+        socket.emit("eliminarProducto", productId);
+
+        formularioEliminar.reset();
+
+        socket.on("productoEliminado", (productId) => {
+        eliminarProductoDeLaTabla(productId);
+        });
+    })
 
     // Manejar el evento submit del formulario
     const formularioAgregar = document.getElementById("formulario-agregar");
@@ -72,7 +88,5 @@ const socket = io(); // Conectar al servidor de Socket.io
         agregarProductoALaTabla(producto);
         });
 
-        // socket.on("productoEliminado", (productId) => {
-        // eliminarProductoDeLaTabla(productId);
-        // });
+
     });
