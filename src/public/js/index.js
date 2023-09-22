@@ -24,10 +24,7 @@ const socket = io(); // Conectar al servidor de Socket.io
 
     // Función para eliminar un producto de la tabla
     function eliminarProductoDeLaTabla(productId) {
-        const filaAEliminar = document.querySelector(`table tbody tr[data-product-id="${productId}"]`);
-        if (filaAEliminar) {
-            filaAEliminar.remove();
-        }
+        const filaAEliminar = document.querySelector(`body > table > tbody > tr:nth-child(${productId})`).remove()
     }
 
     // Manejar el evento submit del formulario de eliminar
