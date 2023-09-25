@@ -62,6 +62,7 @@ class ProductManager {
 
       if (productosAgregados.length > 0) {
         console.log("Productos guardados con éxito:", productosAgregados);
+        return newProduct
       } else {
         console.log("No se ha agregado ningún producto nuevo.");
       }

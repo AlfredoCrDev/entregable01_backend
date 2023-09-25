@@ -52,10 +52,10 @@ io.on("connection", (socket) => {
 
     socket.on("agregarProducto", async (nuevoProducto) => {
     
-        await productManager.addProduct(nuevoProducto)
+        const newProducto = await productManager.addProduct(nuevoProducto)
 
         // Emitiendo un evento para actualizar la lista en el cliente.
-        io.emit("productoAgregado", nuevoProducto);
+        io.emit("productoAgregado", newProducto);
 
     });
 
