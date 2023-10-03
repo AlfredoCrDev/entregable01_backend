@@ -1,5 +1,5 @@
 const express = require("express");
-const ProductManager = require("../productManager")
+const ProductManager = require("../Dao/productManagerMDB")
 
 const router = express.Router()
 
@@ -30,7 +30,7 @@ router.get("/products", async (req, res) =>{
 
 router.get("/product/:pid", async (req, res) =>{
     try{
-        const productId = parseInt(req.params.pid);
+        const productId = (req.params.pid);
         const product= await productManager.getProductById(productId);
         res.send({producto : product});
         }catch(error){
@@ -41,6 +41,9 @@ router.get("/product/:pid", async (req, res) =>{
 router.post("/products", async (req, res) => {
   try {
     const newProduct = req.body
+    if(newProduct.id || newProduct._id){
+      res.status(400).json({"message": "No se permite enviar el ID de forma manual" })
+    }
     const product = await productManager.addProduct(newProduct)
     res.status(200).send({message: "Producto agregado correctamente", product})
   } catch (error) {
@@ -50,25 +53,34 @@ router.post("/products", async (req, res) => {
 
 router.put("/product/:pid", async (req, res) => {
   try {
-    const productId = parseInt(req.params.pid);
+    const productId = (req.params.pid);
     const updateProduct = req.body
-    const product = await productManager.updateProduct(productId, updateProduct)
-    res.status(200).send({message:"Producto actualizado con Éxitio", product})
+    const result = await productManager.updateProduct(productId, updateProduct)
+    if (result.success) {
+      res.status(200).send({ message: result.message, product: result.product });
+    } else {
+      res.status(404).send({ message: result.message });
+    }
   } catch (error) {
-    console.error("Error al actualizar el producto", error)
-    res.status(500).send({message: "Error al actualiza el producto"})
+    console.error("Error al actualizar el producto", error);
+    res.status(500).send({ message: "Error al actualizar el producto" });
   }
 })
 
 router.delete("/product/:pid", async(req, res) => {
   try {
-    const productId = parseInt(req.params.pid);
-    const product = await productManager.deleteProduct(productId)
-    res.status(200).send({ message:'Producto eliminado exitosamente', product })
+    const productId = req.params.pid;
+    const product = await productManager.deleteProduct(productId);
+
+    if (product.success) {
+      res.status(200).send({ message: product.message, product: product.product });
+    } else {
+      res.status(404).send({ message: product.message });
+    }
   } catch (error) {
-    console.error("No se pudo eliminar el producto", error)
-    res.status(500).send({message: "Error al eliminar el producto"})
+    console.error("No se pudo eliminar el producto", error);
+    res.status(500).send({ message: "Error al eliminar el producto" });
   }
-})
+});
 
 module.exports = router

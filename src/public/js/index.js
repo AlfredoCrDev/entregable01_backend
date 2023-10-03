@@ -91,3 +91,16 @@ const socket = io(); // Conectar al servidor de Socket.io
 
 
     });
+
+    const formularioMensaje = document.getElementById("formulario-mensaje")
+    formularioMensaje.addEventListener("submit", (e) => {
+        e.preventDefault()
+
+        const usuario = document.getElementById("usuario").value
+        const mensaje = document.getElementById("mensaje").value
+
+        const newMessage = {
+            user: usuario,
+            message : mensaje
+        }
+    })
