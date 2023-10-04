@@ -4,6 +4,10 @@ const PORT = 8080;
 
 const { default: mongoose } = require("mongoose")
 
+//Multer
+const multer = require("multer")
+
+// Rutas
 const productsRouter = require("./routes/products.router")
 const cartsRouter = require("./routes/carts.router")
 const handlebars = require("express-handlebars")
@@ -16,9 +20,9 @@ const { Server } = require("socket.io")
 const server = http.createServer(app);
 const io = new Server(server);
 
+// ManagerFile
 const ProductManager = require("./Dao/productManagerMDB")
 const productManager = new ProductManager();
-
 const MessageManager = require("./Dao/messageManager")
 const messageManager = new MessageManager();
 
@@ -91,6 +95,28 @@ io.on("connection", (socket) => {
         console.log("Cliente desconectado de Socket.io")
     })
 });
+
+// Config Multer
+const storage = multer.diskStorage({
+  destination : (req, file, cb) => {
+    cb(null, path.join(__dirname, "uploads"))
+  },
+  filename: (req, file, cb) =>{
+    const timestamp = Date.now()
+    const originalName = file.originalname
+    const ext = path.extname(originalName)
+    cb(null, `${timestamp}-${originalName}`)
+  }
+})
+const upload = multer({storage})
+
+//Config el html de la carpeta public
+// app.use(express.static(path.join(__dirname, "public")))
+
+//Ruta para manejar la subida del archivo
+app.post("/upload", upload.single("archivo"), (req, resp) => {
+  resp.json({message: "Archivo subido exitosamente"})
+})
 
 
 app.use("/api", productsRouter)

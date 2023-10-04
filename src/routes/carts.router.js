@@ -1,6 +1,5 @@
 const express = require("express");
-const fs = require("fs/promises")
-const CartManager = require("../Dao/cartManagerFS")
+const CartManager = require("../Dao/cartManagerMDB")
 
 const router = express.Router()
 
@@ -19,7 +18,7 @@ router.post("/carts", async (req, res) => {
 
 router.get("/carts/:cid", async (req, res) => {
   try {
-    const cartId = parseInt(req.params.cid);
+    const cartId = (req.params.cid);
     const getCart = await cartManager.getCartById(cartId)
     if (getCart.success) {
       res.status(200).json({ message: getCart.message, carrito: getCart.carrito });
@@ -34,8 +33,8 @@ router.get("/carts/:cid", async (req, res) => {
 
 router.post("/carts/:cid/product/:pid", async (req, res) => {
   try {
-    const cartId = parseInt(req.params.cid);
-    const productId = parseInt(req.params.pid);
+    const cartId = (req.params.cid);
+    const productId = (req.params.pid);
     const addProductToCart = await cartManager.addProductCartById(cartId, productId)
   
     if(addProductToCart.success){

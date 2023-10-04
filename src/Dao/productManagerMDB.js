@@ -46,7 +46,7 @@ class ProductManager {
 
   async updateProduct(id, updatedFields) {
     try {
-      const requiredFields = ["title", "description", "price", "code", "stock", "status", "category"];
+      const requiredFields = ["title", "description", "price", "code", "stock", "category"];
       const missingFields = requiredFields.filter((field) => !updatedFields[field]);
 
       if (missingFields.length > 0) {

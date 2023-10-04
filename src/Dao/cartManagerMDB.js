@@ -8,7 +8,7 @@ class CartManager{
 
   async addNewCart(){
     try {
-      const carrito = await cartModel.create()
+      const carrito = await cartModel.create({products: []})
       console.log("Carrito creado con éxito", carrito);
     } catch (error) {
       console.log("Error al tratar de crear el carrito", error);
@@ -37,8 +37,8 @@ class CartManager{
 
   async addProductCartById(cartId, productId){
     try {
-      const carrito = await cartModel.find({_id: cartId});
-      const productos = await productModel.find({_id: productId})
+      const carrito = await cartModel.findById(cartId);
+      const productos = await productModel.findById(productId)
     
       if (!carrito) {
         return {
