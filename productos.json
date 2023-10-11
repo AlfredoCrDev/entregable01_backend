@@ -1,1 +1,308 @@
-[{"id":1,"title":"Azucar Blanca","description":"Azucar blanca refinada 1kg","price":1000,"thumbnail":"","code":"azu01","stock":7},{"id":2,"title":"Azucar Morena","description":"Azucar Morena refinada 1kg","price":900,"thumbnail":"","code":"azu02","stock":6},{"id":3,"title":"Sal Gruesa","description":"Sal gruesa refinada 1kg","price":800,"thumbnail":"","code":"sal01","stock":11},{"id":4,"title":"Mantequilla","description":"Mantequillas sin sal 250gr","price":1500,"thumbnail":"","code":"mant01","stock":11},{"id":5,"title":"Queso Azul","description":"Trozos de queso azul de 250gr","price":3000,"thumbnail":"","code":"ques01","stock":11},{"id":6,"title":"Kllsl","description":"oqwooqe","price":22,"stock":12,"code":"aoskasfjk","category":"kafkaskfasdk","status":"false"},{"id":7,"title":"prueba","description":"prueba","price":1200,"stock":11,"code":"prueba01","category":"prueba","status":"true"},{"id":8,"title":"prueba2","description":"prueba22","price":1100,"stock":22,"code":"prueba02","category":"prueba","status":"false"}]
+[
+  {
+    "title": "Arroz",
+    "description": "Arroz blanco de grano largo",
+    "price": 2990,
+    "stock": 10,
+    "category": "Alimentos",
+    "code": "ARZ123",
+    "status": true
+  },
+  {
+    "title": "Leche",
+    "description": "Leche fresca entera",
+    "price": 1990,
+    "stock": 20,
+    "category": "Lácteos",
+    "code": "LEC456",
+    "status": true
+  },
+  {
+    "title": "Pan",
+    "description": "Pan integral recién horneado",
+    "price": 3490,
+    "stock": 5,
+    "category": "Panadería",
+    "code": "PAN789",
+    "status": true
+  },
+  {
+    "title": "Manzanas",
+    "description": "Manzanas rojas frescas",
+    "price": 990,
+    "stock": 15,
+    "category": "Frutas",
+    "code": "MAN101",
+    "status": true
+  },
+  {
+    "title": "Pasta",
+    "description": "Pasta de trigo orgánica",
+    "price": 2490,
+    "stock": 0,
+    "category": "Alimentos",
+    "code": "PAS222",
+    "status": false
+  },
+  {
+    "title": "Carne de res",
+    "description": "Carne de res magra",
+    "price": 7990,
+    "stock": 8,
+    "category": "Carnes",
+    "code": "CAR345",
+    "status": true
+  },
+  {
+    "title": "Cereal",
+    "description": "Cereal de desayuno saludable",
+    "price": 3790,
+    "stock": 12,
+    "category": "Desayuno",
+    "code": "CER678",
+    "status": true
+  },
+  {
+    "title": "Papel higiénico",
+    "description": "Rollo de papel higiénico suave",
+    "price": 1490,
+    "stock": 30,
+    "category": "Hogar",
+    "code": "PAPEL001",
+    "status": true
+  },
+  {
+    "title": "Sopa enlatada",
+    "description": "Sopa de pollo enlatada",
+    "price": 1290,
+    "stock": 0,
+    "category": "Alimentos",
+    "code": "SOPA111",
+    "status": false
+  },
+  {
+    "title": "Yogur",
+    "description": "Yogur de vainilla bajo en grasa",
+    "price": 990,
+    "stock": 15,
+    "category": "Lácteos",
+    "code": "YOG123",
+    "status": true
+  },
+  {
+    "title": "Pescado",
+    "description": "Filete de pescado fresco",
+    "price": 5490,
+    "stock": 9,
+    "category": "Pescado",
+    "code": "PES001",
+    "status": true
+  },
+  {
+    "title": "Cerveza",
+    "description": "Cerveza artesanal IPA",
+    "price": 3990,
+    "stock": 15,
+    "category": "Bebidas",
+    "code": "CER002",
+    "status": true
+  },
+  {
+    "title": "Huevos",
+    "description": "Docena de huevos frescos",
+    "price": 1990,
+    "stock": 25,
+    "category": "Lácteos",
+    "code": "HUE003",
+    "status": true
+  },
+  {
+    "title": "Aceite de oliva",
+    "description": "Aceite de oliva extra virgen",
+    "price": 3490,
+    "stock": 10,
+    "category": "Aceites",
+    "code": "ACE004",
+    "status": true
+  },
+  {
+    "title": "Papas",
+    "description": "Papas frescas orgánicas",
+    "price": 1490,
+    "stock": 18,
+    "category": "Verduras",
+    "code": "PAP005",
+    "status": true
+  },
+  {
+    "title": "Galletas",
+    "description": "Galletas de chocolate",
+    "price": 1690,
+    "stock": 22,
+    "category": "Snacks",
+    "code": "GAL006",
+    "status": true
+  },
+  {
+    "title": "Jabón de manos",
+    "description": "Jabón líquido antibacterial",
+    "price": 990,
+    "stock": 30,
+    "category": "Hogar",
+    "code": "JAB007",
+    "status": true
+  },
+  {
+    "title": "Café",
+    "description": "Café molido de alta calidad",
+    "price": 2990,
+    "stock": 14,
+    "category": "Bebidas",
+    "code": "CAF008",
+    "status": true
+  },
+  {
+    "title": "Detergente",
+    "description": "Detergente líquido para ropa",
+    "price": 1990,
+    "stock": 20,
+    "category": "Limpieza",
+    "code": "DET009",
+    "status": true
+  },
+  {
+    "title": "Queso",
+    "description": "Queso cheddar en lonchas",
+    "price": 2990,
+    "stock": 8,
+    "category": "Lácteos",
+    "code": "QUE010",
+    "status": true
+  },
+  {
+    "title": "Carne de res",
+    "description": "Filete de carne de res premium",
+    "price": 8990,
+    "stock": 12,
+    "category": "Carnes",
+    "code": "CAR011",
+    "status": true
+  },
+  {
+    "title": "Pasta",
+    "description": "Paquete de pasta de trigo",
+    "price": 1990,
+    "stock": 20,
+    "category": "Alimentos",
+    "code": "PAS012",
+    "status": true
+  },
+  {
+    "title": "Yogur",
+    "description": "Yogur natural probiótico",
+    "price": 1490,
+    "stock": 15,
+    "category": "Lácteos",
+    "code": "YOG013",
+    "status": true
+  },
+  {
+    "title": "Salsa de tomate",
+    "description": "Salsa de tomate casera",
+    "price": 990,
+    "stock": 18,
+    "category": "Salsas",
+    "code": "SAL014",
+    "status": true
+  },
+  {
+    "title": "Pan integral",
+    "description": "Pan integral fresco",
+    "price": 2490,
+    "stock": 10,
+    "category": "Panaderia",
+    "code": "PAN015",
+    "status": true
+  },
+  {
+    "title": "Cepillo de dientes",
+    "description": "Cepillo de dientes suave",
+    "price": 490,
+    "stock": 30,
+    "category": "Higiene",
+    "code": "CEP016",
+    "status": true
+  },
+  {
+    "title": "Arroz",
+    "description": "Arroz blanco de grano largo",
+    "price": 1890,
+    "stock": 24,
+    "category": "Granos",
+    "code": "ARR017",
+    "status": true
+  },
+  {
+    "title": "Leche de almendra",
+    "description": "Leche de almendra sin azúcar",
+    "price": 2490,
+    "stock": 8,
+    "category": "Lácteos",
+    "code": "ALM018",
+    "status": true
+  },
+  {
+    "title": "Champiñones",
+    "description": "Champiñones frescos",
+    "price": 990,
+    "stock": 14,
+    "category": "Verduras",
+    "code": "CHA019",
+    "status": true
+  },
+  {
+    "title": "Aceite de Oliva",
+    "description": "Aceite de oliva extra virgen, 1 litro",
+    "price": 7.990,
+    "stock": 25,
+    "category": "Aceites",
+    "code": "ACE001",
+    "status": true
+  },
+  {
+    "title": "Arroz Integral",
+    "description": "Arroz integral de grano largo, 1 kg",
+    "price": 2.490,
+    "stock": 15,
+    "category": "Granos",
+    "code": "ARR002",
+    "status": true
+  },
+  {
+    "title": "Manzanas",
+    "description": "Manzanas frescas, paquete de 6 unidades",
+    "price": 4.990,
+    "stock": 30,
+    "category": "Frutas",
+    "code": "MAN003",
+    "status": true
+  },
+  {
+    "title": "Yogur Natural",
+    "description": "Yogur natural sin azúcar, 500g",
+    "price": 1.990,
+    "stock": 20,
+    "category": "Lácteos",
+    "code": "YOG004",
+    "status": true
+  },
+  {
+    "title": "Pasta Penne",
+    "description": "Pasta penne italiana, 500g",
+    "price": 1.790,
+    "stock": 18,
+    "category": "Alimentos",
+    "code": "PAS005",
+    "status": true
+  }
+]

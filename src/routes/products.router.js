@@ -1,5 +1,6 @@
 const express = require("express");
 const ProductManager = require("../Dao/productManagerMDB")
+const { productModel } = require("../models/products.model")
 
 const router = express.Router()
 
@@ -8,21 +9,51 @@ const productManager = new ProductManager();
 
 router.get("/products", async (req, res) =>{
   try {
-      const limite = req.query.limit;
-      const products = await productManager.getProducts();
+    const { limit = 10 , page = 1, sort, status, category} = req.query;
 
-      if (!limite) {
-          res.json(products);
-      } else {
-          const limiteNum = parseInt(limite);
+    const queryOptions = {};
 
-          if (!isNaN(limiteNum)) {
-              const limitedProducts = products.slice(0, limiteNum);
-              res.json(limitedProducts);
-          } else {
-              res.status(400).json({ error: 'El parámetro "limit" no es un número válido.' });
-          }
-      }
+    if (limit) {
+      queryOptions.limit = parseInt(limit);
+    } else {
+      queryOptions.limit = 10;
+    }
+
+    queryOptions.page = parseInt(page);
+
+    if (sort) {
+      queryOptions.sort = sort === "asc" ? "price" : "-price";
+    }
+
+    const filter = {};
+
+    if (category) {
+      filter.category = category;
+    } else if (status === "true") {
+      filter.status = true;
+    } else if (status === "false") {
+      filter.status = false;
+    }
+
+    const result = await productModel.paginate(filter, queryOptions);
+
+    res.json({
+      status: "success",
+      payload: result.docs,
+      limit: result.limit,
+      totalPages: result.totalPages,
+      prevPage: result.hasPrevPage ? result.prevPage : null,
+      nextPage: result.hasNextPage ? result.nextPage : null,
+      page: result.page,
+      hasPrevPage: result.hasPrevPage,
+      hasNextPage: result.hasNextPage,
+      prevLink: result.hasPrevPage
+        ? `/products?limit=${limit}&page=${result.prevPage}`
+        : null,
+      nextLink: result.hasNextPage
+        ? `/products?limit=${limit}&page=${result.nextPage}`
+        : null,
+    });
   } catch (error) {
       console.log('Error', error);
   }
