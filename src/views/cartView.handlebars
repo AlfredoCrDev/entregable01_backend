@@ -1,23 +1,23 @@
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Carrito</title>
-  </head>
-  <body>
-    <h1 class="tituloProducto">Carrito de Compras</h1>
-    <div class="cart-container">
-      <ul>
-        {{#each productsInTheCart.carrito.products}}
-          <li class="cart-item">
-            <span class="product-title">{{this.product.title}}</span><br />
-            Precio: $<span
-              class="product-price">{{this.product.price}}</span><br />
-            Cantidad:
-            <span class="product-quantity">{{this.quantity}}</span>
-          </li>
-        {{/each}}
-      </ul>
-    </div>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carrito</title>
+</head>
+
+<body>
+  <h1 class="tituloProducto">Carrito de Compras</h1>
+  <div class="cart-container">
+    <ul>
+      {{#each productsInTheCart.carrito.products}}
+      <li class="cart-item">
+        <span class="product-title">{{this.product.title}}</span><br />
+        Precio: $<span class="product-price">{{this.product.price}}</span><br />
+        Cantidad:
+        <span class="product-quantity">{{this.quantity}}</span>
+      </li>
+      {{/each}}
+    </ul>
+  </div>
 </html>
