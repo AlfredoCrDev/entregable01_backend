@@ -5,7 +5,7 @@ const router = express.Router()
 
 const cartManager = new CartManager();
 
-router.post("/carts", async (req, res) => {
+router.post("/api/carts", async (req, res) => {
   try {
     const cart = await cartManager.addNewCart()
     res.status(200).send({message: "Nuevo carrito creado", cart})
@@ -16,7 +16,7 @@ router.post("/carts", async (req, res) => {
   }
 })
 
-router.get("/carts/:cid", async (req, res) => {
+router.get("/api/carts/:cid", async (req, res) => {
   try {
     const cartId = (req.params.cid);
     const getCart = await cartManager.getCartById(cartId)
@@ -31,7 +31,21 @@ router.get("/carts/:cid", async (req, res) => {
   }
 });
 
-router.post("/carts/:cid/product/:pid", async (req, res) => {
+router.get("/carts/:cid", async (req, res) => {
+  try {
+    const cartId = (req.params.cid);
+    const productsInTheCart = await cartManager.getCartById(cartId)
+
+    res.render("cartView", { productsInTheCart })
+  } catch (error) {
+    console.error("Error al obtener el carrito", error);
+    res.status(500).send({ message: "Error al obtener el carrito" });
+  }
+});
+
+
+
+router.post("/api/carts/:cid/product/:pid", async (req, res) => {
   try {
     const cartId = (req.params.cid);
     const productId = (req.params.pid);
@@ -49,7 +63,7 @@ router.post("/carts/:cid/product/:pid", async (req, res) => {
   }
 });
 
-router.delete("/carts/:cid/product/:pid", async (req, res) => {
+router.delete("/api/carts/:cid/product/:pid", async (req, res) => {
   try {
     const cartId = (req.params.cid);
     const productId = (req.params.pid);
@@ -67,7 +81,7 @@ router.delete("/carts/:cid/product/:pid", async (req, res) => {
   }
 })
 
-router.put("/carts/:cid/product/:pid", async (req, res) => {
+router.put("/api/carts/:cid/product/:pid", async (req, res) => {
   try {
     const cartId = req.params.cid;
     const productId = req.params.pid;
@@ -85,6 +99,36 @@ router.put("/carts/:cid/product/:pid", async (req, res) => {
     res.status(500).send({ message: "Error al actualizar la cantidad del producto en el carrito" });
   }
 });
+
+router.put("/api/carts/:cid", async (req, res) => {
+  try {
+    const cartId = req.params.cid;
+    const newProducts = req.body.products;
+
+    const updateResult = await cartManager.updateCartWithProducts(cartId, newProducts);
+
+    if (updateResult.success) {
+      res.status(200).send({ message: updateResult.message });
+    } else {
+      res.status(404).send({ message: updateResult.message });
+    }
+  } catch (error) {
+    console.error("Error al modificar el carrito con nuevos productos", error);
+    res.status(500).send({ message: "Error al modificar el carrito con nuevos productos" });
+  }
+});
+
+router.delete("/api/carts/:cid", async (req, res) => {
+  const cartId = req.params.cid;
+  const result = await cartManager.deleteAllProductsFromCart(cartId);
+
+  if (result.success) {
+    res.status(200).json({ message: result.message });
+  } else {
+    res.status(404).json({ message: result.message });
+  }
+});
+
 
 
 module.exports = router;

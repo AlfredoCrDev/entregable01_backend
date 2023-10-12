@@ -119,8 +119,8 @@ app.post("/upload", upload.single("archivo"), (req, resp) => {
 })
 
 
-app.use("/api", productsRouter)
-app.use("/api", cartsRouter)
+app.use("/", productsRouter)
+app.use("/", cartsRouter)
 
 server.listen(PORT, ()=>{
     console.log(`Servidor corriendo en el Puerto ${PORT}`);

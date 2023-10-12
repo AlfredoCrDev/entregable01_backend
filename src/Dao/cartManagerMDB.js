@@ -15,13 +15,13 @@ class CartManager{
     }
   }
 
-  async getCartById(id){
+  async getCartById(cartId){
     try {
-      const carrito = await cartModel.find({_id: id}).populate('products.product');
+      const carrito = await cartModel.findById(cartId).populate('products.product').lean();
       if (!carrito) {
         return {
           success: false,
-          message: `Carrito con ID ${id} no encontrado`
+          message: `Carrito con ID ${cartId} no encontrado`
         }
       } else {
         return {
@@ -157,6 +157,56 @@ class CartManager{
       };
     }
   }
+
+  // Controlador para modificar el carrito con un nuevo arreglo de productos
+  async updateCartWithProducts(cartId, newProducts) {
+    try {
+      const cart = await cartModel.findById(cartId);
+
+      if (!cart) {
+        return {
+          success: false,
+          message: `No se encontró el carrito con el ID ${cartId}`,
+        };
+      }
+
+      cart.products = [...cart.products, ...newProducts];
+
+      await cart.save();
+
+      return {
+        success: true,
+        message: "Carrito actualizado con éxito",
+      };
+    } catch (error) {
+      console.error("Error al modificar el carrito con nuevos productos", error);
+      return {
+        success: false,
+        message: "Error al modificar el carrito con nuevos productos",
+      };
+    }
+  }
+
+  async deleteAllProductsFromCart(cartId) {
+    try {
+      const cart = await cartModel.findByIdAndUpdate(
+        cartId,
+        { $set: { products: [] } },
+        { new: true }
+      );
+  
+      if (!cart) {
+        return { success: false, message: `Carrito con ID ${cartId} no encontrado` };
+      }
+  
+      return { success: true, message: "Todos los productos eliminados del carrito" };
+    } catch (error) {
+      console.error("Error al eliminar productos del carrito", error);
+      return { success: false, message: "Error al eliminar productos del carrito" };
+    }
+  }
+  
+
 }
 
 module.exports = CartManager

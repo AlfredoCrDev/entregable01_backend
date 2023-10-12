@@ -6,8 +6,17 @@ const router = express.Router()
 
 const productManager = new ProductManager();
 
+router.get("/products", async(req, res) => {
+  try {
+    const products = await productManager.getProducts()
 
-router.get("/products", async (req, res) =>{
+    res.render("productos", { products })
+  } catch (error) {
+    console.log("Error al tratar de mostrar los productos", error);
+  }
+})
+
+router.get("/api/products", async (req, res) =>{
   try {
     const { limit = 10 , page = 1, sort, status, category} = req.query;
 
@@ -59,7 +68,7 @@ router.get("/products", async (req, res) =>{
   }
 })
 
-router.get("/product/:pid", async (req, res) =>{
+router.get("/api/product/:pid", async (req, res) =>{
     try{
         const productId = (req.params.pid);
         const product= await productManager.getProductById(productId);
@@ -69,7 +78,7 @@ router.get("/product/:pid", async (req, res) =>{
     }
 })
 
-router.post("/products", async (req, res) => {
+router.post("/api/products", async (req, res) => {
   try {
     const newProduct = req.body
     if(newProduct.id || newProduct._id){
@@ -82,7 +91,7 @@ router.post("/products", async (req, res) => {
   }
 })
 
-router.put("/product/:pid", async (req, res) => {
+router.put("/api/product/:pid", async (req, res) => {
   try {
     const productId = (req.params.pid);
     const updateProduct = req.body
@@ -98,7 +107,7 @@ router.put("/product/:pid", async (req, res) => {
   }
 })
 
-router.delete("/product/:pid", async(req, res) => {
+router.delete("/api/product/:pid", async(req, res) => {
   try {
     const productId = req.params.pid;
     const product = await productManager.deleteProduct(productId);
