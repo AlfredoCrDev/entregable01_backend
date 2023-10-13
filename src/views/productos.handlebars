@@ -10,7 +10,7 @@
 <body>
   <h1 class="tituloProducto">Lista de Productos</h1>
   <div class="container">
-    {{#each products}}
+    {{#each products.docs}}
     <div class="product-card">
       <h2 class="product-title">{{this.title}}</h2>
       <p class="product-description">{{this.description}}</p>
@@ -19,7 +19,17 @@
     </div>
     {{/each}}
   </div>
+<div class="pagination">
+  {{#if products.hasPrevPage}}
+  <a href="/products?limit={{products.limit}}&page={{products.prevPage}}" class="page-link">Página anterior</a>
+  {{/if}}
 
+  <span class="page-info">Página {{products.page}} de {{products.totalPages}}</span>
+
+  {{#if products.hasNextPage}}
+  <a href="/products?limit={{products.limit}}&page={{products.nextPage}}" class="page-link">Página siguiente</a>
+  {{/if}}
+</div>
 </body>
 
 </html>

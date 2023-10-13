@@ -8,7 +8,9 @@ const productManager = new ProductManager();
 
 router.get("/products", async(req, res) => {
   try {
-    const products = await productManager.getProducts()
+    const { limit = 10 , page = 1} = req.query;
+
+    const products = await productManager.getProducts(limit, page,)
 
     res.render("productos", { products })
   } catch (error) {

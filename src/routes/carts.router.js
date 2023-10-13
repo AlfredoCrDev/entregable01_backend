@@ -5,16 +5,18 @@ const router = express.Router()
 
 const cartManager = new CartManager();
 
-router.post("/api/carts", async (req, res) => {
+
+router.get("/carts/:cid", async (req, res) => {
   try {
-    const cart = await cartManager.addNewCart()
-    res.status(200).send({message: "Nuevo carrito creado", cart})
-    console.log("Carrito creado con éxito");
+    const cartId = (req.params.cid);
+    const productsInTheCart = await cartManager.getCartById(cartId)
+    
+    res.render("cartView", { productsInTheCart })
   } catch (error) {
-    console.log("Error al enviar productos al carrito", error);
-    res.status(500).send({message: "Error al crear un nuevo carrito"})    
+    console.error("Error al obtener el carrito", error);
+    res.status(500).send({ message: "Error al obtener el carrito" });
   }
-})
+});
 
 router.get("/api/carts/:cid", async (req, res) => {
   try {
@@ -31,19 +33,16 @@ router.get("/api/carts/:cid", async (req, res) => {
   }
 });
 
-router.get("/carts/:cid", async (req, res) => {
+router.post("/api/carts", async (req, res) => {
   try {
-    const cartId = (req.params.cid);
-    const productsInTheCart = await cartManager.getCartById(cartId)
-
-    res.render("cartView", { productsInTheCart })
+    const cart = await cartManager.addNewCart()
+    res.status(200).send({message: "Nuevo carrito creado", cart})
+    console.log("Carrito creado con éxito");
   } catch (error) {
-    console.error("Error al obtener el carrito", error);
-    res.status(500).send({ message: "Error al obtener el carrito" });
+    console.log("Error al enviar productos al carrito", error);
+    res.status(500).send({message: "Error al crear un nuevo carrito"})    
   }
-});
-
-
+})
 
 router.post("/api/carts/:cid/product/:pid", async (req, res) => {
   try {

@@ -6,10 +6,16 @@ class ProductManager {
   }
 
 
-  async getProducts() {
+  async getProducts(limit = 10, page = 1) {
     try {
-      const products = await productModel.find().lean()
-      return products;
+      const options = {
+        page: page,
+        limit: limit
+      }
+      const result = await productModel.paginate({}, options)
+      const leanProducts = result.docs.map((product) => product.toObject());
+      result.docs = leanProducts
+      return result;
     } catch (error) {
       console.log("Error al tratar de obtener los productos", error);
     }
