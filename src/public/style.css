@@ -376,3 +376,20 @@ ul {
 .profile-value {
   color: #333;
 }
+
+/* Estilos para el enlace de "Ir a Productos" en la vista de perfil */
+.product-link {
+  display: inline-block;
+  background-color: #007BFF;
+  color: #fff;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 10px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.product-link:hover {
+  background-color: #0056b3;
+}
