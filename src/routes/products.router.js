@@ -8,11 +8,19 @@ const productManager = new ProductManager();
 
 router.get("/products", async(req, res) => {
   try {
+    if(!req.session.email){
+      return res.redirect("/api/sessions/login")
+    }
     const { limit = 10 , page = 1} = req.query;
 
     const products = await productManager.getProducts(limit, page,)
 
-    res.render("productos", { products })
+    res.render("productos", { 
+      title: "Lista de productos",
+      products: products,
+      email : req.session.email,
+      rol: req.session.rol
+     })
   } catch (error) {
     console.log("Error al tratar de mostrar los productos", error);
   }
