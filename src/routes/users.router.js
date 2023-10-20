@@ -1,5 +1,7 @@
 const express = require("express");
 const UserManager = require("../Dao/userManager")
+const utils = require("../utils")
+const isValidPassword = require("../utils")
 
 const router = express.Router()
 
@@ -22,7 +24,7 @@ router.post("/api/sessions/register", async (req, res) => {
       last_name: req.body.last_name,
       email: req.body.email,
       age: req.body.age,
-      password: req.body.password,
+      password: utils.createHash(req.body.password),
       rol: req.body.rol
     }
   
