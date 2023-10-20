@@ -393,3 +393,36 @@ ul {
 .product-link:hover {
   background-color: #0056b3;
 }
+
+/* HBS de error */
+
+.error-container {
+  text-align: center;
+  padding: 20px;
+  background-color: red;
+  color: white;
+  font-size: 18px;
+  border: 1px solid #d32f2f;
+  border-radius: 5px;
+  margin: 20px auto;
+  max-width: 400px;
+}
+
+.error-container h1 {
+  font-size: 24px;
+  margin: 0;
+  padding: 0;
+}
+
+.error-container p {
+  margin: 10px 0;
+}
+
+.error-container a {
+  color: #ffee58;
+  text-decoration: underline;
+}
+
+.error-container a:hover {
+  color: #ffca28;
+}

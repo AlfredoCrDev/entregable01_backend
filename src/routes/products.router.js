@@ -9,7 +9,7 @@ const productManager = new ProductManager();
 router.get("/products", async(req, res) => {
   try {
     if(!req.session.email){
-      return res.redirect("/api/sessions/login")
+      return res.redirect("/")
     }
     const { limit = 10 , page = 1} = req.query;
 

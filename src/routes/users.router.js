@@ -55,17 +55,19 @@ router.post("/api/sessions/login", async (req, res) => {
         req.session.apellido = user.last_name
         req.session.age = user.age
         req.session.rol = user.rol
-        res.redirect("/api/sessions/profile")
+        res.redirect("/profile")
       } else {
         req.session.nombre = user.first_name
         req.session.email = user.email
         req.session.rol = user.rol
         res.redirect("/products")
       }
-      
+      }else{
+        res.status(403).render("error", { message: "Acceso prohibido. Credenciales incorrectas." });
     }
   } catch (error) {
     console.log("Error al trarar de hacer login");
+    res.status(500).render("error", { message: "Se ha producido un error inesperado" });
   }
 })
 
@@ -74,12 +76,12 @@ router.get("/api/sessions/logout", (req, res) => {
     if (err) {
       console.error("Error al cerrar sesión:", err);
     }
-    res.redirect("/api/sessions/login");
+    res.redirect("/");
   });
 });
 
 // Vistas Handlebars
-router.get("/api/sessions/login", async(req, res) => {
+router.get("/", async(req, res) => {
   try {
     
     res.render("login", { title: "Inicio de Sesion" })
@@ -88,7 +90,7 @@ router.get("/api/sessions/login", async(req, res) => {
   }
 })
 
-router.get("/api/sessions/register", async(req, res) => {
+router.get("/register", async(req, res) => {
   try {
     
     res.render("register", { title: "Registro de Usuario" })
@@ -97,10 +99,10 @@ router.get("/api/sessions/register", async(req, res) => {
   }
 })
 
-router.get("/api/sessions/profile", async(req, res) => {
+router.get("/profile", async(req, res) => {
   try {
     if(!req.session.email){
-      return res.redirect("/api/sessions/login")
+      return res.redirect("/")
     }
     const sessionData = {
       email: req.session.email,

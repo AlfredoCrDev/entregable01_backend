@@ -46,9 +46,9 @@ app.set("view engine", "handlebars");
 app.use(express.static(path.join(__dirname, "public")));
 
 //Endpoint hbs
-app.get("/", async (req, res) => {
+app.get("/listadoproductoshb", async (req, res) => {
   let productos = await productManager.getProducts();
-  res.render("home", {
+  res.render("listadoProductosHB", {
     title: "Productos con Handlebars",
     products: productos,
   });
@@ -123,8 +123,12 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 //Ruta para manejar la subida del archivo
-app.post("/upload", upload.single("archivo"), (req, resp) => {
-  resp.json({ message: "Archivo subido exitosamente" });
+app.post("/upload", upload.single("archivo"), (req, res) => {
+  res.json({ message: "Archivo subido exitosamente" });
+});
+
+app.get("/upload", async (req, res) => {
+  res.render("fileUpload", { title: "Subir archivo" });
 });
 
 // Configurando session local
