@@ -1,13 +1,14 @@
 const express = require("express");
 const UserManager = require("../Dao/userManager")
 const utils = require("../utils")
-const isValidPassword = require("../utils")
+const passport = require("passport")
 
 const router = express.Router()
 
 const userManager = new UserManager();
 
-router.post("/api/sessions/register", async (req, res) => {
+router.post("/api/sessions/register", passport.authenticate("register", {
+  failureRedirect: "/failregister"}), async (req, res) => {
   try {
     // Verificacion Postman
     // const requiredProperties = ['first_name', 'last_name', 'email', 'age', 'password', 'rol'];
@@ -19,36 +20,45 @@ router.post("/api/sessions/register", async (req, res) => {
     //   return res.status(400).send({ message: `Faltan propiedades requeridas: ${missingProperties.join(', ')}` });
     // }
 
-    const newUser = {
-      first_name: req.body.first_name,
-      last_name: req.body.last_name,
-      email: req.body.email,
-      age: req.body.age,
-      password: utils.createHash(req.body.password),
-      rol: req.body.rol
-    }
+    // Ya esto se realiza en las estrategias de Passport
+    // const newUser = {
+    //   first_name: req.body.first_name,
+    //   last_name: req.body.last_name,
+    //   email: req.body.email,
+    //   age: req.body.age,
+    //   password: utils.createHash(req.body.password),
+    //   rol: req.body.rol
+    // }
   
-    const user = await userManager.createUser(newUser)
-    if(user){
-      return res.redirect("/api/sessions/login")
-    } else {
-      throw Error('Error al crear el usuario')
-    }
+    // const user = await userManager.createUser(newUser)
+    // if(user){
+    //   return res.redirect("/api/sessions/login")
+    // } else {
+    //   throw Error('Error al crear el usuario')
+    // }
+
     // Mensjae Postman solo se puede hacer un envío
     // res.status(200).send({message: "Usuario creado con Éxito", user})
+    
+    res.redirect("/")
+
   } catch (error) {
     console.log("Error al crear el usuario", error);
   }
 })
 
-router.post("/api/sessions/login", async (req, res) => {
+router.get("/failregister", async(req, res) => {
+  res.send({error: "Falló la estrategia de registro"})
+})
+
+router.post("/api/sessions/login", passport.authenticate("login", {
+  failureRedirect:"/faillogin"}) ,async (req, res) => {
   try {
+    // const username = req.body.username
+    // const password = req.body.password
 
-    const username = req.body.username
-    const password = req.body.password
-
-    const user = await userManager.getUserByCredencial(username, password)
-  
+    // const user = await userManager.getUserByCredencial(username, password)
+    const user = req.user
     if(user){
 
       if(user.rol === "admin") {
@@ -71,6 +81,10 @@ router.post("/api/sessions/login", async (req, res) => {
     console.log("Error al trarar de hacer login");
     res.status(500).render("error", { message: "Se ha producido un error inesperado" });
   }
+})
+
+router.get("/faillogin", (req, res) => {
+  res.send({error: "Error en el login"})
 })
 
 router.get("/api/sessions/logout", (req, res) => {

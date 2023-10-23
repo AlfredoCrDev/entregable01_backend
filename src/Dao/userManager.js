@@ -1,24 +1,8 @@
 const { userModel } = require("../models/usuarios.model")
 
-class ProductManager {
+class UserManager {
   constructor() {
     this.products = [];
-  }
-
-
-  async getProducts(limit = 10, page = 1) {
-    try {
-      const options = {
-        page: page,
-        limit: limit
-      }
-      const result = await productModel.paginate({}, options)
-      const leanProducts = result.docs.map((product) => product.toObject());
-      result.docs = leanProducts
-      return result;
-    } catch (error) {
-      console.log("Error al tratar de obtener los productos", error);
-    }
   }
 
 
@@ -34,8 +18,11 @@ class ProductManager {
 
   async getUserByCredencial(email, password) {
     try {
-      const user = await userModel.findOne({email, password})
+      // Ya no se pregunta por el password en la bdd ya que es un dato sensible
+      // const user = await userModel.findOne({email, password})
 
+      const user = await userModel.findOne({email:email}, {email: 1, first_name:1, last_name: 1, password: 1})
+      console.log(user);
       if(user){
         return user
       } else {
@@ -43,6 +30,33 @@ class ProductManager {
       }
     } catch (err) {
       throw new Error("Error al obtener el usuario", err);
+    }
+  }
+
+  async findEmailUser (email) {
+    try {
+      const user = await userModel.findOne(email)
+      if(user){
+        return user
+      } else {
+        return null
+      }
+    } catch (err) {
+      throw new Error("Error al obtener el usuario", err);
+    }
+  }
+
+  async getUserById(id) {
+    try {
+      const user = await userModel.find({_id: id})
+
+      if (user) {
+        return user;
+      } else {
+        return `No existe un usuario con el ID: ${id}`;
+      }
+    } catch (err) {
+      throw new Error("Error al obtener el usuario por ID", err);
     }
   }
 
@@ -109,4 +123,4 @@ class ProductManager {
   }
 }
 
-module.exports = ProductManager;
+module.exports = UserManager;

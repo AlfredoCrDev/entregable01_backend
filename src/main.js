@@ -33,8 +33,14 @@ const session = require("express-session");
 const FileStorage = require("session-file-store");
 const MongoStore = require("connect-mongo");
 
+// Passport
+const passport = require("passport")
+const initializaPassport = require("./config/passport.config")
+
+// Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 
 // Configuracion handlebars
 app.engine("handlebars", handlebars.engine());
@@ -153,6 +159,11 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }))
+
+// Inicializamos passport
+initializaPassport()
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use("/", productsRouter);
 app.use("/", cartsRouter);
