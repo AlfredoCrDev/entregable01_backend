@@ -51,7 +51,7 @@ router.post("/api/sessions/register", passport.authenticate("register", {
 
 router.get("/failregister", async(req, res) => {
   const errorMessage = req.flash("error")[0];
-  res.render("faillogin", {msj: errorMessage})
+  res.render("faillogin", {message: errorMessage})
 })
 
 router.post("/api/sessions/login", passport.authenticate("login", {
@@ -100,6 +100,19 @@ router.get("/api/sessions/logout", (req, res) => {
     res.redirect("/");
   });
 });
+
+router.get("/github", passport.authenticate("github", {scope: ["user:email"]}), async(req,res) =>{})
+
+router.get("/api/sessions/githubcallback", passport.authenticate("github", {
+  failureRedirect:"/faillogin"}), async(req,res) =>{
+    req.session.user = req.user;
+    req.session.nombre = req.session.user.first_name
+    req.session.apellido = req.session.user.last_name
+    req.session.age = req.session.user.age
+    req.session.email = req.session.user.email
+    req.session.rol = req.session.user.rol
+    res.redirect("/profile")
+  })
 
 // Vistas Handlebars
 router.get("/", async(req, res) => {

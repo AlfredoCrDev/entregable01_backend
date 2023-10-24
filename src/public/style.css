@@ -247,17 +247,29 @@ ul {
 .go-to-register {
   margin-top: 20px;
   text-align: center;
+    && a {
+      text-decoration: none;
+      color: #007BFF;
+      font-weight: 600;
+      font-size: 0.9rem;
+        &:hover {
+          text-decoration: underline;
+      }
+    }
 }
 
-.go-to-register a {
-  text-decoration: none;
-  color: #007BFF;
-  font-weight: 600;
-  font-size: 0.9rem;
+.go-to-registerRSS {
+  margin-top: 20px;
+  text-align: center;
 }
 
-.go-to-register a:hover {
-  text-decoration: underline;
+.go-to-registerRSS button{
+  background-color: black;
+  height: 40px;
+  border-radius: 8px;
+  && a {
+    color: white;
+  }
 }
 
 /*FORMULARIO DE REGISTRO */
