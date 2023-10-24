@@ -408,13 +408,13 @@ ul {
   max-width: 400px;
 }
 
-.error-container h1 {
+.error-container h1, .info-container h1 {
   font-size: 24px;
   margin: 0;
   padding: 0;
 }
 
-.error-container p {
+.error-container p, .info-container p {
   margin: 10px 0;
 }
 
@@ -425,4 +425,27 @@ ul {
 
 .error-container a:hover {
   color: #ffca28;
+}
+
+/* HBS de Informacion */
+
+.info-container {
+  text-align: center;
+  padding: 20px;
+  background-color: blue;
+  color: white;
+  font-size: 18px;
+  border: 1px solid blue;
+  border-radius: 5px;
+  margin: 20px auto;
+  max-width: 400px;
+}
+
+.info-container a {
+  color: white;
+  text-decoration: underline;
+}
+
+.info-container a:hover {
+  color: yellowgreen;
 }

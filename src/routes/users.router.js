@@ -9,7 +9,9 @@ const router = express.Router()
 const userManager = new UserManager();
 
 router.post("/api/sessions/register", passport.authenticate("register", {
-  failureRedirect: "/failregister"}), async (req, res) => {
+  failureRedirect: "/faillogin",
+  //failureFlash se utiliza para habiliater los mensajes que se envian desde las estrategias
+  failureFlash: true}), async (req, res) => {
   try {
     // Verificacion Postman
     // const requiredProperties = ['first_name', 'last_name', 'email', 'age', 'password', 'rol'];
@@ -40,16 +42,16 @@ router.post("/api/sessions/register", passport.authenticate("register", {
 
     // Mensjae Postman solo se puede hacer un envío
     // res.status(200).send({message: "Usuario creado con Éxito", user})
-    
-    res.redirect("/")
 
+    res.redirect("/")
   } catch (error) {
     console.log("Error al crear el usuario", error);
   }
 })
 
 router.get("/failregister", async(req, res) => {
-  res.send({error: "Falló la estrategia de registro"})
+  const errorMessage = req.flash("error")[0];
+  res.render("faillogin", {msj: errorMessage})
 })
 
 router.post("/api/sessions/login", passport.authenticate("login", {

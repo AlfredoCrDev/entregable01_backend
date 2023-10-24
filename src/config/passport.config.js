@@ -14,7 +14,7 @@ const initializaPassport = () => {
         const findUser = await userManager.findEmailUser({email: username})
         if(findUser){
           console.log("Usuario ya existe");
-          return done(null, false);
+          return done(null, false, { message: "Usuario ya existe" });
         }
         const newUser = {
           first_name,
@@ -25,9 +25,9 @@ const initializaPassport = () => {
           rol
         }
         const user = await userManager.createUser(newUser)
-        return done(null, user)
+        return done(null, user, { message: "Usuario creado con éxito. Ya puedes iniciar Sesión" })
       } catch (error) {
-        return done("Error al obtener el usuario: "+ error)
+        return done(error)
       }
     }))
 
