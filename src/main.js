@@ -4,6 +4,9 @@ const PORT = 8080;
 
 const { default: mongoose } = require("mongoose");
 
+// Flash para utilizar la funcion req.flash en las rutas
+const flash = require("express-flash");
+
 //Multer
 const multer = require("multer");
 
@@ -159,6 +162,9 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }))
+ 
+// Middleware para usar Flash y enviar mensajes con la funcion req.flash
+app.use(flash());
 
 // Inicializamos passport
 initializaPassport()

@@ -3,6 +3,7 @@ const UserManager = require("../Dao/userManager")
 const utils = require("../utils")
 const passport = require("passport")
 
+
 const router = express.Router()
 
 const userManager = new UserManager();
@@ -52,7 +53,8 @@ router.get("/failregister", async(req, res) => {
 })
 
 router.post("/api/sessions/login", passport.authenticate("login", {
-  failureRedirect:"/faillogin"}) ,async (req, res) => {
+  failureRedirect:"/faillogin",
+  failureFlash: true}) ,async (req, res) => {
   try {
     // const username = req.body.username
     // const password = req.body.password
@@ -75,16 +77,17 @@ router.post("/api/sessions/login", passport.authenticate("login", {
         res.redirect("/products")
       }
       }else{
-        res.status(403).render("error", { message: "Acceso prohibido. Credenciales incorrectas." });
+        res.status(403).render("failLogin", { message: "Acceso prohibido. Credenciales incorrectas." });
     }
   } catch (error) {
     console.log("Error al trarar de hacer login");
-    res.status(500).render("error", { message: "Se ha producido un error inesperado" });
+    res.status(500).render("faillogin", { message: "Se ha producido un error inesperado" });
   }
 })
 
 router.get("/faillogin", (req, res) => {
-  res.send({error: "Error en el login"})
+  const errorMessage = req.flash("error")[0];
+  res.render("faillogin", {message: errorMessage})
 })
 
 router.get("/api/sessions/logout", (req, res) => {
