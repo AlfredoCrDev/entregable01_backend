@@ -1,5 +1,8 @@
 # Backend / Ecommerce
 
+![GitHub commit activity (branch)](https://img.shields.io/github/commit-activity/t/AlfredoCrDev/entregable01_backend)
+![GitHub last commit (branch)](https://img.shields.io/github/last-commit/AlfredoCrDev/entregable01_backend/main)
+
 ### ☑️ Dependencias:
 
 - Node.js    
