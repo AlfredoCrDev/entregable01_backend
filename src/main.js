@@ -66,7 +66,10 @@ app.get("/listadoproductoshb", async (req, res) => {
 app.get("/realtimeproducts", async (req, res) => {
   try {
     const productos = await productManager.getProducts();
-    res.render("realTimeProducts", { productos });
+    res.render("realTimeProducts", { 
+      productos,
+      title: "Productos Tiempo Real"
+    });
   } catch (error) {
     console.error(
       "Error al cargar la vista de productos en tiempo real",

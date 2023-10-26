@@ -7,7 +7,7 @@
   - express-flash  
   - express-handlebars  
   - express-session  
-- Session-file-stpre  
+- Session-file-store  
 - Mongoose  
   - mongoose-paginate-v2  
   - connect-mongo  
@@ -23,11 +23,10 @@
 ### 💻 Instalación:  
 
 1. Clonar el repositorio: 
-2. 
 ```shell
 git clone https://github.com/AlfredoCrDev/entregable01_backend
 ```
-1. Posicionarte en el directorio del proyecto.
+2. Posicionarte en el directorio del proyecto.
 
 ```shell
 cd /entregable01_backend
@@ -74,11 +73,23 @@ Aplicacion debe abrirse en el puerto:
 - ❌ DELETE `/api/cart/:idCart`: Elimina un carrito indicandole su ID.
   - ❌ DELETE PRODUCT IN CART `/api/cart/:idCart/products/:idProduct`: Elimina un producto de un carrito, indicandole su ID.
 
+📥   **Subir archivos** 
+
+- 💾 SUBIR ARCHIVOS MEDIANTE MULTER `http://localhost:8080/upload`
+
+💬   **Enviar mensajes a la base de datos** 
+
+- 📣 ENVIAR MENSAJES A LA BASE DE DATOS `http://localhost:8080/messages`
+
+📖   **Lista de productos con HBS** 
+
+- 📦 LISTADO DE PRODUCTOS ESTATICO `http://localhost:8080/listadoproductoshb`
+- 📦🔁 LISTADO DE PRODUCTOS DINÁMICO, PERMITE AGREGAR Y ELIMINAR PRODUCTOS MENDIANTE FORMULARIO `http://localhost:8080/realtimeproducts`
+
 🔎   **Login de la aplicacion** 
 
 - 🔒 INICIO DE SESION `http://localhost:8080`
 - 👤 REGISTRO DE USUARIO `http://localhost:8080/register`
-
 
 
 ### ⚙️ Funciones & Características:
@@ -102,7 +113,7 @@ Aplicacion debe abrirse en el puerto:
     ]
   }
 ```
-- **geProducts:** Permite visualizar con el método GET de http, los productos agregados previamente.
+- **getProducts:** Permite visualizar con el método GET de http, los productos agregados previamente.
 También se cuenta con un método para visualizar un producto con su respectivo id: **getProductById**
 
 - 🔁 **updateProduct:** Actualiza un producto que ya este agregado previamente, recibe como parametro el id del mismo. 

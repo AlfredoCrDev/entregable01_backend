@@ -14,9 +14,9 @@
             </tr>
         </thead>
         <tbody>
-            {{#each products}}
+            {{#each products.docs}}
                 <tr>
-                    <td>{{this.id}}</td>
+                    <td>{{this._id}}</td>
                     <td>{{this.title}}</td>
                     <td>{{this.description}}</td>
                     <td>$ {{this.price}}</td>
