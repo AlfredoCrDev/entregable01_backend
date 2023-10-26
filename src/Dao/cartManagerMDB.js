@@ -15,6 +15,26 @@ class CartManager{
     }
   }
 
+  async getCars(){
+    try {
+      const carrito = await cartModel.find();
+      if (!carrito) {
+        return {
+          success: false,
+          message: `No hay carritos`
+        }
+      } else {
+        return {
+          success : true ,
+          message: "Carritos encontrados",
+          carrito: carrito
+        }
+      }    
+    } catch (error) {
+      console.log("Error al tratar de obtener el carrito por ID", error);  
+    }
+  }
+
   async getCartById(cartId){
     try {
       const carrito = await cartModel.findById(cartId).populate('products.product').lean();

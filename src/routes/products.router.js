@@ -20,7 +20,7 @@ router.get("/products", async(req, res) => {
       products: products,
       email : req.session.email,
       rol: req.session.rol
-     })
+    })
   } catch (error) {
     console.log("Error al tratar de mostrar los productos", error);
   }
