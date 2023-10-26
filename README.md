@@ -84,12 +84,13 @@ Aplicacion debe abrirse en el puerto:
 📖   **Lista de productos con HBS** 
 
 - 📦 LISTADO DE PRODUCTOS ESTATICO `http://localhost:8080/listadoproductoshb`
-- 📦🔁 LISTADO DE PRODUCTOS DINÁMICO, PERMITE AGREGAR Y ELIMINAR PRODUCTOS MENDIANTE FORMULARIO `http://localhost:8080/realtimeproducts`
+- 📦🔁 LISTADO DE PRODUCTOS DINÁMICOS, PERMITE AGREGAR Y ELIMINAR PRODUCTOS MEDIANTE FORMULARIO `http://localhost:8080/realtimeproducts`
 
 🔎   **Login de la aplicacion** 
 
 - 🔒 INICIO DE SESION `http://localhost:8080`
 - 👤 REGISTRO DE USUARIO `http://localhost:8080/register`
+- :octocat: SE AGREGA FUNCIONALIDAD DE INICIAR SESION (REGISTRO) MEDIANTE CUENTA DE GITHUB `http://localhost:8080` mediante estrategias de passport
 
 
 ### ⚙️ Funciones & Características:
