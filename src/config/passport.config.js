@@ -2,9 +2,29 @@ const passport = require("passport")
 const local = require("passport-local")
 const utils = require("../utils")
 const UserManager = require("../Dao/userManager")
+const CartManager = require("../Dao/cartManagerMDB")
 const git = require("passport-github2")
+const jwt = require("passport-jwt")
+
+
+const JwtStrategy = jwt.Strategy
+const ExtractJwt = jwt.ExtractJwt
+
+const cookieExtractor = req =>{
+  let token = null
+  if(req && req.cookies){
+    token = req.cookies["token"]
+  }
+  return token
+}
+
+const jwtOptions = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey : "TokenSecretoAppAlfredo",
+}
 
 const userManager = new UserManager();
+const cartManager = new CartManager()
 
 const LocalStrategy = local.Strategy;
 const GitHubStrategy = git.Strategy;
@@ -24,6 +44,7 @@ const initializaPassport = () => {
           email,
           age,
           password: utils.createHash(password),
+          cart: cartManager.addNewCart(),
           rol
         }
         const user = await userManager.createUser(newUser)
@@ -86,7 +107,34 @@ const initializaPassport = () => {
         return done(error)
       }
     }))
-    
+
+    // JWT
+  passport.use('jwt', new JwtStrategy({
+      jwtFromRequest:ExtractJwt.fromExtractors([cookieExtractor]),
+      secretOrKey: 'TokenSecretoAppAlfredo'
+  }, async(jwt_payload, done)=>{
+      try{
+          return done(null, jwt_payload)
+      }
+      catch(err){
+          return done(err)
+      }
+  }
+  ))
+
+  // passport.use("jwtlogin", new JwtStrategy(jwtOptions, async (jwt_payload, done) =>{
+  //   try {
+  //     const user = await userManager.findEmailUser({email: jwt_payload.email })
+  //     if(!user){
+  //       return done(null, false, {message: "Usuario no encontrado"})
+  //     }
+  //     return done(null, user)
+  //   } catch (error) {
+  //     console.log("Error", error);
+  //     return done(error, false);
+  //   }
+  // })
+  // )
 }
 
 module.exports = initializaPassport

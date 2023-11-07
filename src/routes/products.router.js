@@ -1,14 +1,18 @@
 const express = require("express");
 const ProductManager = require("../Dao/productManagerMDB")
 const { productModel } = require("../models/products.model")
+const utils = require("../utils")
+
 
 const router = express.Router()
 
 const productManager = new ProductManager();
 
-router.get("/products", async(req, res) => {
+router.get("/products", utils.passportCall("jwt"), utils.authorization("usuario"), async(req, res) => {
   try {
-    if(!req.session.email){
+    const user = req.user.user;
+    if(!user){
+      console.log("No esta autorizado");
       return res.redirect("/")
     }
     const { limit = 10 , page = 1} = req.query;
@@ -18,13 +22,34 @@ router.get("/products", async(req, res) => {
     res.render("productos", { 
       title: "Lista de productos",
       products: products,
-      email : req.session.email,
-      rol: req.session.rol
+      email : user.email,
+      rol: user.rol
     })
   } catch (error) {
     console.log("Error al tratar de mostrar los productos", error);
   }
 })
+
+// Session
+// router.get("/products", async(req, res) => {
+//   try {
+//     if(!req.session.email){
+//       return res.redirect("/")
+//     }
+//     const { limit = 10 , page = 1} = req.query;
+
+//     const products = await productManager.getProducts(limit, page,)
+
+//     res.render("productos", { 
+//       title: "Lista de productos",
+//       products: products,
+//       email : req.session.email,
+//       rol: req.session.rol
+//     })
+//   } catch (error) {
+//     console.log("Error al tratar de mostrar los productos", error);
+//   }
+// })
 
 router.get("/api/products", async (req, res) =>{
   try {
